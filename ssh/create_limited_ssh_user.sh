@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Install dialog, needed for user input
-pacman --noconfirm --needed -S dialog || error "Make sure to run this script as root and with an internet connection."
+pacman --noconfirm --needed -S dialog || echo "Make sure to run this script as root and with an internet connection."; exit 1
 
 # Installing OpenSSH
 dialog --title "OpenSSH" --infobox "Making sure OpenSSH is installed and enabling the ssh server" 0 0
@@ -48,4 +48,4 @@ chattr +i /home/noHome/.ssh
 # Now alls that is left is to change the default sshd config file. This is done by changing the field with "[username]" in my custom sshd template to the username give using dialog before and using that to overwrite the current sshd_config file
 sed "s/\[username\]/$username/g" > /etc/ssh/sshd_config < ./sshd_limiteduser_config
 
-dialog --title "Done!" --msgbox "The script is now done. The only thing left to do is to export the newly generated ssh keys (found ad /) and reboot to make sure everything works as expected" 0 0
+dialog --title "Done!" --msgbox "The script is now done. The only thing left to do is to export the newly generated ssh keys (found at /) and reboot to make sure everything works as expected" 0 0

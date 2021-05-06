@@ -27,10 +27,10 @@ mkdir -p /home/noHome/.ssh/
 sshkeysPassphrase="$(dialog --no-cancel --inputbox "Enter a passphrase for the new private ssh key" 12 65 3>&1 1>&2 2>&3 3>&1)"
 
 # Generate the private and public key
-sudo -u limited ssh-keygen -N $sshkeysPassphrase -t rsa -f /home/noHome/.ssh/id_rsa
+sudo -u "$username" ssh-keygen -N $sshkeysPassphrase -t rsa -f /home/noHome/.ssh/id_rsa
 
 # Copy the newly created public key, to act as a public key for the ssh server that you can login with
-sudo -u cp /home/noHome/.ssh/id_rsa.pub /home/noHome/.ssh/authorized_keys
+sudo -u "$username" cp /home/noHome/.ssh/id_rsa.pub /home/noHome/.ssh/authorized_keys
 
 # Move the newly generated private and public key to the root of filesystem so they're ready for export
 mv /home/noHome/.ssh/id_rsa /id_rsa

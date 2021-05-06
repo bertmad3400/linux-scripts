@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Install dialog, needed for user input
-pacman --noconfirm --needed -S dialog || echo "Make sure to run this script as root and with an internet connection."; exit 1
+pacman --noconfirm --needed -S dialog || { echo "Make sure to run this script as root and with an internet connection."; exit 1; }
 
 # Installing OpenSSH
 dialog --title "OpenSSH" --infobox "Making sure OpenSSH is installed and enabling the ssh server" 0 0

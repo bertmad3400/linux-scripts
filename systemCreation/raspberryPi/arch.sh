@@ -8,6 +8,12 @@ error(){
 # Installing dialog
 pacman --noconfirm --needed -S dialog || error "Make sure to run this script as root and with an internet connection."
 
+dialog --title "Installing..." --infobox "Installing wget and dofstools (for FAT filesystem creation) needed for the installation" 0 0
+
+pacman --noconfirm --needed -S wget || error "Couldn't install wget, try maybe refreshing keyrings or updating the system"
+
+pacman --noconfirm --needed -S dosfstools || error "Couldn't install dofstools needed for creating FAT file system, try maybe refreshing keyrings or updating the system"
+
 # Making sure the user knows what they're doing
 dialog --title "LET'S GO!" --yesno "With dialog installed we're are ready to take this script for a spin. Please, DO NOT run it unless you fully understand the risk! This was developed by me for me only, and as such there might be errors that worst case could wipe entire drives. You sure you want to continue?" 10 60 || error "User exited"
 
@@ -46,7 +52,7 @@ mount ${installDrive}1 ./boot
 mount ${installDrive}2 ./root
 
 wget "$sourceUrl"
-bsdtar -xpf "*.tar.gz" -C root
+bsdtar -xpf *.tar.gz -C root
 sync
 
 # Move the boot files to the boot partition from the root partition
@@ -54,4 +60,3 @@ mv ./root/boot/* ./boot
 
 # Un-mounting the drives
 umount ./boot ./root
-

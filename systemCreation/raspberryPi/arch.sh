@@ -22,8 +22,10 @@ dialog --title "LET'S GO!" --yesno "With dialog installed we're are ready to tak
 installDrive="$(dialog --title "Select a drive" --no-items --menu "Which drive do you want the installation to procced on?" 0 0 0 $( for drive in $(lsblk -dno NAME); do echo /dev/"$drive"; done) 3>&2 2>&1 1>&3 || error "User exited" )"
 
 sourceUrl="$(dialog --title "Raspberry pi model" --menu "Which model of the raspberry pi do you want to install arch on?" 0 0 0 \
-	"http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz" "Raspberry pi zero" \
-	"http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-4-latest.tar.gz" "Raspberry pi 4" \
+	"http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz" "Raspberry pi zero/1" \
+	"http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz" "Raspberry pi 2" \
+	"http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz" "Raspberry pi 3" \
+	"http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-4-latest.tar.gz" "Raspberry pi 4/400" \
 	3>&1 1>&2 2>&3 3>&1 )"
 
 dialog --title "WARNING!" --defaultno --yes-label "NUKE IT!" --no-label "Please don't..." --yesno "This script is readying to NUKE $installDrive. ARE YOU SURE YOU WANT TO CONTINUE?"  10 60 || error "User apparently didn't wan't to massacre $installDrive"

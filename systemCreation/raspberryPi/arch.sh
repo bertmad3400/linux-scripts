@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Script for installing arch on a raspberry pi, whether it's a zero, 1, 2, 3 or 4. Meant to be run from an arch system.
+
 error(){
 	echo "Error: $@"
 	exit 1
@@ -26,7 +28,7 @@ sourceUrl="$(dialog --title "Raspberry pi model" --menu "Which model of the rasp
 
 dialog --title "WARNING!" --defaultno --yes-label "NUKE IT!" --no-label "Please don't..." --yesno "This script is readying to NUKE $installDrive. ARE YOU SURE YOU WANT TO CONTINUE?"  10 60 || error "User apparently didn't wan't to massacre $installDrive"
 
-dialog --title "Disk" --infobox "Partitioning the drives and creating the file systems" 0 0
+dialog --title "Disk" --infobox "Partitioning the drives, creating the file systems and mounting them" 0 0
 
 # Creating the needed partitions
 sed "s/\s*\#.*$//" <<-EOF | sfdisk $installDrive
@@ -51,8 +53,11 @@ mkdir root boot
 mount ${installDrive}1 ./boot
 mount ${installDrive}2 ./root
 
+dialog --title "Downloading..." --infobox "Downloading the needed system files from Archlinux Arm using the url ${sourceUrl}, and extracting the files" 0 0
 wget "$sourceUrl"
 bsdtar -xpf *.tar.gz -C root
+
+dialog --title "Installing..." --infobox "Installing the system on ${installDrive}." 0 0
 sync
 
 # Move the boot files to the boot partition from the root partition
@@ -60,3 +65,5 @@ mv ./root/boot/* ./boot
 
 # Un-mounting the drives
 umount ./boot ./root
+
+dialog --title "Done!" --infobox "The installation is done and the drives unmounted!" 0 0

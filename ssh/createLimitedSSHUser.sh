@@ -49,6 +49,6 @@ chattr +i /home/noHome/.ssh/authorized_keys
 chattr +i /home/noHome/.ssh
 
 # Now alls that is left is to change the default sshd config file. This is done by changing the field with "[username]" in my custom sshd template to the username give using dialog before and using that to overwrite the current sshd_config file
-sed "s/\[username\]/$username/g" > /etc/ssh/sshd_config < ./SSHDLimitedUserConfigTemplate
+sed "s/\[username\]/$username/g" >> /etc/ssh/sshd_config < ./SSHDLimitedUserConfigTemplate
 
 dialog --title "Done!" --msgbox "The script is now done. The only thing left to do is to export the newly generated ssh keys (found at /) and reboot to make sure everything works as expected" 0 0

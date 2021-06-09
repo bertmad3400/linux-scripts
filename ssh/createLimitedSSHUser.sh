@@ -24,7 +24,7 @@ expiredate=$(dialog --date-format "%Y-%m-%d" --title "Expire date" --cancel-labe
 mkdir -p /home/noHome/.ssh/
 
 # Change the owner to the new user of the .ssh folder
-chown "${username}:${username}" /home/noHome/.ssh/
+chown "${username}:${username}" -R /home/noHome/
 
 # Getting a passphrase for the newly generated ssh key
 sshkeysPassphrase="$(dialog --no-cancel --inputbox "Enter a passphrase for the new private ssh key" 12 65 3>&1 1>&2 2>&3 3>&1)"
@@ -43,7 +43,8 @@ mv /home/noHome/.ssh/id_rsa.pub /id_rsa.pub
 echo "no-pty,no-X11-forwarding,permitopen='localhost:2222',command=/bin/true $(cat /home/noHome/.ssh/authorized_keys)" > /home/noHome/.ssh/authorized_keys
 
 # Last but not least, make sure the permissions is set right, and that the immutable bit is set to prevent tampering with the keys
-chmod 400 /home/noHome/.ssh/authorized_keys
+chmod 700 /home/noHome/.ssh/
+chmod 600 /home/noHome/.ssh/authorized_keys
 #The immutable bit preventing anyone without root to write or change the file/directory
 chattr +i /home/noHome/.ssh/authorized_keys
 chattr +i /home/noHome/.ssh

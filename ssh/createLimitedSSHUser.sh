@@ -20,14 +20,14 @@ done
 # Creating the user with or without an expiry date based on whether the user inputs a date or cancels
 expiredate=$(dialog --date-format "%Y-%m-%d" --title "Expire date" --cancel-label "Don't set one" --calendar "It is strongly recommended to set a date for automatic expiration of the user. When should that happen?" 0 0 1 1 2020 3>&1 1>&2 2>&3 3>&1) && useradd "$username" -M -U -s /bin/false -e "$expiredate" || useradd "$username" -M -U -s /bin/false
 
+# Getting a passphrase for the newly generated ssh key
+sshkeysPassphrase="$(dialog --no-cancel --inputbox "Enter a passphrase for the new private ssh key" 12 65 3>&1 1>&2 2>&3 3>&1)"
+
 # Creating directory for hosting the limited users ssh keys
 mkdir -p /home/noHome/.ssh/
 
 # Change the owner to the new user of the .ssh folder
 chown "${username}:${username}" -R /home/noHome/
-
-# Getting a passphrase for the newly generated ssh key
-sshkeysPassphrase="$(dialog --no-cancel --inputbox "Enter a passphrase for the new private ssh key" 12 65 3>&1 1>&2 2>&3 3>&1)"
 
 # Generate the private and public key
 sudo -u "$username" ssh-keygen -N $sshkeysPassphrase -t rsa -f /home/noHome/.ssh/id_rsa

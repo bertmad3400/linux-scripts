@@ -40,7 +40,7 @@ mv /home/noHome/.ssh/id_rsa /id_rsa
 mv /home/noHome/.ssh/id_rsa.pub /id_rsa.pub
 
 # Add just a couple of options to the rsa public key, to make sure that it isn't going to be missused
-echo "no-pty,no-X11-forwarding,permitopen='localhost:2222',command=/bin/true $(cat /home/noHome/.ssh/authorized_keys)" > /home/noHome/.ssh/authorized_keys
+# echo "no-pty,no-X11-forwarding,permitopen='localhost:2222',command=/bin/true $(cat /home/noHome/.ssh/authorized_keys)" > /home/noHome/.ssh/authorized_keys
 
 # Last but not least, make sure the permissions is set right, and that the immutable bit is set to prevent tampering with the keys
 chmod 700 /home/noHome/.ssh/

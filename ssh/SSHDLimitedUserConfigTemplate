@@ -7,3 +7,4 @@ Match User [username]
 	ForceCommand /bin/true
 	PasswordAuthentication no
 	PubkeyAuthentication yes
+	AuthorizedKeysFile /home/noHome/.ssh/authorized_keys

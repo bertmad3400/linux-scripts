@@ -25,10 +25,10 @@ After=network.target
 Type=simple
 Restart=always
 RestartSec=1
-Environment='PYTHONUNBUFFERED=1'
+Environment='PYTHONUNBUFFERED=1 PYTHONPATH=${projectPath}'
 User=$projectName
 WorkingDirectory=$projectPath
-ExecStart=${projectPath}/VEnv/bin/python3 ${projectPath}/main.py
+ExecStart=${projectPath}/VEnv/bin/python3 -m app
 
 [Install]
 WantedBy=multi-user.target"
